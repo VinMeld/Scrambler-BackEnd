@@ -1,3 +1,1 @@
-from app import getApp
-app = getApp()
-
+web gunicorn app:app
