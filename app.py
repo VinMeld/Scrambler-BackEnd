@@ -35,8 +35,8 @@ def post_word():
     db.session.commit()
     return f"Added new word {inputWord}"
 
-if __name__ == "__main__":
-    import bjoern
-    bjoern.run(app, "10.0.0.218", 8000)
-def getApp():
-    return app
+# if __name__ == "__main__":
+   #  import bjoern
+    #bjoern.run(app, "10.0.0.218", 8000)
+# def getApp():
+  #  return app
