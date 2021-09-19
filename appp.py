@@ -17,7 +17,19 @@ class Word(db.Model):
 def get_word():
     if request.args.get('length') is None:
         return ' '.join(map(str,[words.word for words in Word.query.order_by(func.random()).limit(20)]))
-    return ' '.join(map(str,[words.word for words in Word.query.order_by(func.random()).limit(int(request.args.get('length')))]))
+    if int(request.args.get('length')) > 0:
+        return ' '.join(map(str,[words.word for words in Word.query.order_by(func.random()).limit(int(request.args.get('length')))]))
+    return 'Error'
+
+@app.route("/all", methods=['GET'])
+def get_all():
+    rows = Word.query.count()
+    return ' '.join(map(str,[words.word for words in Word.query.order_by(func.random()).limit(rows)]))
+
+@app.route("/count", methods=['GET'])
+def get_count():
+    rows = Word.query.count()
+    return str(rows)
 
 @app.route("/postword", methods=['GET'])
 def post_word():
@@ -31,9 +43,22 @@ def post_word():
         return 'word contains non alpha characters'
     elif len(inputWord) > 7 :
         return 'word is too long!'
-    db.session.add(Word(inputWord))
+    db.session.add(Word(word = inputWord))
     db.session.commit()
     return f"Added new word {inputWord}"
+@app.route("/deleteword", methods=['GET'])
+def delete_word():
+    inputWord = request.args.get('word')
+    if inputWord is None:
+        return 'please add a word to delete'
+    exists = Word.query.filter_by(word=inputWord).first()
+    if exists:
+        Word.query.filter_by(word=inputWord).delete()
+        db.session.commit()
+        return f"deleted {inputWord}"
+    else:
+        return 'could not find word'
+
 
 if __name__ == "__main__":
     import bjoern
