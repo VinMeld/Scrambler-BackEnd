@@ -1,11 +1,12 @@
+Flask_SQLAlchemy==2.5.1
 bjoern==3.1.0
+Flask==2.0.1
 keyring==18.0.1
 SQLAlchemy==1.4.23
-Flask==2.0.1
-Flask_SQLAlchemy==2.5.1
 backports.statistics==0.1.0
 Cython==0.29.24
 ipaddr==2.2.0
 mypy_extensions==0.4.3
 numpy==1.21.2
-ordereddict==1.1
+gunicorn== 19.9.0
+
